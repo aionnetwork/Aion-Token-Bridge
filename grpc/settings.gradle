@@ -1,0 +1,3 @@
+rootProject.name = 'grpc-proto'
+include 'signatory', 'enclave'
+

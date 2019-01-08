@@ -1,0 +1,5 @@
+# no top-level gitignore. 
+# force subprojects to write high-quality gitignores for themselves
+# rationale: this top-level-project contains source in multiple 
+#            languages, frameworks, IDEs, etc; does not make sense to have centralized 
+#            gitignores - gets polluted and hard to maintain  

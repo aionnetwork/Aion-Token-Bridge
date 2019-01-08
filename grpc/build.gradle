@@ -1,0 +1,81 @@
+// plugins needs to be the first thing declared
+plugins {
+	id 'com.google.protobuf' version '0.8.6' apply false
+}
+
+wrapper {
+	gradleVersion = '4.9'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'com.google.protobuf'
+
+
+    sourceCompatibility = 10
+    targetCompatibility = 10
+
+    repositories {
+    	// jcenter is a superset of mavenCentral
+    	jcenter()
+    }
+    
+    protobuf {
+        protoc { artifact = "com.google.protobuf:protoc:3.6.0" }
+        plugins {
+            grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.13.2' }
+        }
+        generateProtoTasks {
+            all()*.plugins { grpc {} }
+        }
+        generatedFilesBaseDir = "$buildDir/protobuf/generated"
+    }
+
+    dependencies {
+        compile 'io.grpc:grpc-netty:1.13.2'
+        compile 'io.grpc:grpc-protobuf:1.13.2'
+        compile 'io.grpc:grpc-stub:1.13.2'
+    	compile 'com.google.protobuf:protobuf-java:3.6.0'
+        compileOnly "javax.annotation:javax.annotation-api:1.2"
+    }
+
+
+    sourceSets {
+        main {
+            proto { srcDir "proto" }
+            java { 
+                srcDir "protobuf/generated/main/grpc"
+                srcDir "protobuf/generated/main/java"  
+            }
+        }
+    }
+
+    jar {
+        baseName "${project.name}-grpc"
+        
+        from sourceSets.main.java
+        destinationDir file("$buildDir/lib")
+        exclude('**/*.proto')
+    }
+}
+
+project(':signatory') {
+    jar.version = '0.0.2'
+}
+
+project(':enclave') {
+    jar.version = '0.0.2'
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

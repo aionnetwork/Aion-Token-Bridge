@@ -1,0 +1,22 @@
+{
+  "aion": {
+    "clients": [
+      {
+        "type": "rpc",
+        "url": "http://localhost:8545"
+      }
+    ],
+    "contractAddress": "0x0000000000000000000000000000000000000000000000000000000000000200",
+    "relayerAddress": "0xa0eb56d95816b8e8e7287ce7c2a1b4457743c2bc1e9a6816211a49c269c6175c2",
+    "finalityBlocks": 16,
+    "startBlock": 383314,
+    "startHash": "0xe956b0ec57dd9e9ead379aa3992abf9988de7f09329791afd1935e94aad94b61",
+    "httpTimeoutSeconds": 10,
+    "consolidatorTimeoutSeconds": 10,
+    "collectorTimeoutSeconds": 10,
+    "consolidatorQuorumSize": 1,
+    "blockCollectorQuorumSize": 1,
+    "relayerMinimumBalance" : 2,
+    "contractMinimumBalance" : 10
+  }
+}

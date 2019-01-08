@@ -1,0 +1,19 @@
+{
+  "signatory": {
+    "tlsEnabled": false,
+    "host": "localhost",
+    "port": 50050,
+    "serverCertChainFilePath": "/scripts/server.crt",
+    "serverPrivateKeyFilePath": "/scripts/server.pem",
+    "trustCertCollectionFilePath": "/scripts/ca.crt"
+  },
+  "enclave": {
+    "url": "localhost:50051"
+  },
+  "eth": {
+    "url": "https://ropsten.infura.io/metamask",
+    "contractAddress" : "0x6b8b173f044b5f811d111ac4c6d152623f42ca33",
+    "triggerEvent" : "Burn(address,bytes32,uint256)",
+    "httpTimeoutSeconds": 15
+  }
+}

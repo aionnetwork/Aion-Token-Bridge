@@ -1,0 +1,24 @@
+{
+  "sql": {
+    "user": "bridge",
+    "password": "",
+    "dbName": "ethMonitor",
+    "host": "localhost",
+    "port": "3306"
+  },
+  "eth": {
+    "clients": [
+      {
+        "type": "node",
+        "url": ""
+      },
+      {
+        "type": "api",
+        "url": "https://ropsten.infura.io/"
+      }
+    ],
+    "pollIntervalSeconds": 30,
+    "maxAcceptedBlockRange": 20,
+    "maxAcceptedSidechainLength": 10
+  }
+}

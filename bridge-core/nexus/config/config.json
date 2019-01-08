@@ -1,0 +1,71 @@
+{
+  "sql": {
+    "user": "bridge",
+    "password": "",
+    "dbName": "bridge",
+    "host": "localhost",
+    "port": "3306"
+  },
+  "eth": {
+    "clients": [
+      {
+        "type": "web3",
+        "url": "https://ropsten.infura.io/metamask"
+
+      }
+    ],
+    "contractAddress": "0x6b8b173f044b5f811d111ac4c6d152623f42ca33",
+    "triggerEvent": "Burn(address,bytes32,uint256)",
+    "finalityBlocks": 4,
+    "startBlock":   3889880,
+    "startHash": "0xc11b98e70fc9da6431e1d080532967678d3a2231de693c8ab1bdd3ef2819f3d5",
+    "batchSize": 8,
+    "httpTimeoutSeconds": 10,
+    "consolidatorTimeoutSeconds": 10,
+    "collectorTimeoutSeconds": 10,
+    "consolidatorQuorumSize":1,
+    "blockCollectorQuorumSize": 1,
+    "shutdownAfterTipStateError": true
+
+  },
+  "aion": {
+    "clients": [
+      {
+        "type": "rpc",
+        "url": "http://localhost:8545"
+      }
+    ],
+    "contractAddress": "0x0000000000000000000000000000000000000000000000000000000000000200",
+    "processedEvent": "ProcessedBundle(bytes32,bytes32)",
+    "distributedEvent": "Distributed(bytes32,address,uint128)",
+    "successfulTxHashEvent" : "SuccessfulTxHash(bytes32)",
+    "receiptMinDepth":3,
+    "finalityBlocks": 24,
+    "httpTimeoutSeconds": 10,
+    "consolidatorTimeoutSeconds": 10,
+    "collectorTimeoutSeconds": 10,
+    "consolidatorQuorumSize":1,
+    "blockCollectorQuorumSize": 1
+
+  },
+  "signatories": [
+    {
+      "publicKey": "d725c8766d786fecdf974848659a90ab3b7f10aef0708b8e2a9f1c44cf6e081f",
+      "url": "localhost:50050",
+      "tlsEnabled": false,
+      "clientCertChainFilePath": "/scripts/client.crt",
+      "clientPrivateKeyFilePath": "/scripts/client.pem",
+      "trustCertCollectionFilePath": "/scripts/ca.crt"
+    }
+  ],
+  "relayer": {
+    "enclaveUrl": "localhost:50052",
+    "publicKey": "19ab2f3355c2f74376718c3f6c995779de2144c4592a5cab23c82b739dc44fe0",
+    "address": "0xa0eb56d95816b918e727ce7c2a1b4457743c2ba5e9a6816211a49c269c6175c2"
+  },
+  "bridge": {
+    "signatoryCollectorTimeoutSeconds": 10,
+    "signatoryQuorumSize": 1
+
+  }
+}
