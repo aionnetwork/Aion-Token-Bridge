@@ -1,0 +1,53 @@
+{
+  "sql": {
+    "user": "bridge",
+    "password": "",
+    "dbName": "bridgeStandby",
+    "host": "localhost",
+    "port": "3306"
+  },
+  "eth": {
+    "clients": [
+      {
+        "type": "web3",
+        "url": "https://ropsten.infura.io/metamask"
+      }
+    ],
+    "contractAddress": "0x6b8b173f044b5f811d111ac4c6d152623f42ca33",
+    "triggerEvent": "Burn(address,bytes32,uint256)",
+    "finalityBlocks": 64,
+    "startBlock":  3987294,
+    "startHash": "0x0892c35253b961693a4a0b204d8b1ad631f1aa93a1a8e9b4f0755ceb147fd95d",
+    "httpTimeoutSeconds": 10,
+    "consolidatorTimeoutSeconds": 10,
+    "collectorTimeoutSeconds": 10,
+    "oracleBlockBatchSize": 500,
+    "oracleReceiptBatchSize": 500,
+    "consolidatorQuorumSize":1,
+    "blockCollectorQuorumSize": 1
+  },
+  "aion": {
+    "clients": [
+      {
+        "type": "rpc",
+        "url": "http://localhost:8545"
+      }
+    ],
+    "contractAddress": "0x0000000000000000000000000000000000000000000000000000000000000200",
+    "relayerAddress": "0xa0eb56d95816b718e727ce7c2a1b4457743c2bc1e9a6816211a49c269c7f75c2",
+    "processedEvent": "ProcessedBundle(bytes32,bytes32)",
+    "distributedEvent": "Distributed(bytes32,address,uint128)",
+    "finalityBlocks": 16,
+    "startBlock":  383314,
+    "startHash": "0xe956b0ec57dd9e9ead379aa3992abf9988de7f09329791afd1935e94aad94b61",
+    "httpTimeoutSeconds": 10,
+    "consolidatorTimeoutSeconds": 10,
+    "collectorTimeoutSeconds": 10,
+    "oracleBlockBatchSize": 500,
+    "oracleReceiptBatchSize": 500,
+    "chainOracleHistoryLoaderSelected": false,
+    "consolidatorQuorumSize":1,
+    "blockCollectorQuorumSize": 1,
+    "shutdownAfterTipStateError": true
+  }
+}
