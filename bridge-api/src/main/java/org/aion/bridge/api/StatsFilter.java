@@ -1,0 +1,63 @@
+/*
+ *
+ *   This code is licensed under the MIT License
+ *
+ *   Copyright (c) 2019 Aion Foundation https://aion.network/
+ *
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *
+ *   The above copyright notice and this permission notice shall be included in all
+ *   copies or substantial portions of the Software.
+ *
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *   SOFTWARE.
+ *
+ */
+
+package org.aion.bridge.api;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+@Component
+@WebFilter("/*")
+public class StatsFilter implements Filter {
+
+    private static final Logger log = LoggerFactory.getLogger("bridge_api");
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // empty
+    }
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        long time = System.currentTimeMillis();
+        try {
+            chain.doFilter(req, resp);
+        } finally {
+            time = System.currentTimeMillis() - time;
+            log.debug("[Endpoint] {}: {} ms ", ((HttpServletRequest) req).getRequestURI(),  time);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        // empty
+    }
+}

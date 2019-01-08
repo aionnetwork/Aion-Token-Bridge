@@ -1,0 +1,191 @@
+// plugins needs to be the first thing declared
+plugins {
+    id "org.jetbrains.gradle.plugin.idea-ext" version "0.3" apply false
+}
+
+wrapper {
+    gradleVersion = '4.9'
+}
+
+// configurations common to all subprojects
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
+
+    sourceCompatibility = 10
+    targetCompatibility = 10
+
+    repositories {
+        // jcenter is a superset of mavenCentral
+        jcenter()
+    }
+
+    test {
+        // https://junit.org/junit5/docs/current/user-guide/#running-tests-build-gradle
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    // for now, give all subprojects all dependencies,
+    // we can worry about separating this out later
+    dependencies {
+
+        // include any jars in the lib folder
+        implementation fileTree(dir: 'lib', include: '*.jar')
+
+		// test
+		testImplementation 'junit:junit:4.12'
+		testImplementation 'org.dbunit:dbunit:2.5.4'
+		testImplementation('org.mockito:mockito-core:2.21.0')
+		testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
+		//testImplementation 'org.powermock:powermock-core:2.0.0-beta.5'
+		testImplementation 'org.powermock:powermock-api-easymock:2.0.0-beta.5'
+		testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
+		testImplementation 'org.easymock:easymock:3.6'
+        testImplementation 'nl.jqno.equalsverifier:equalsverifier:2.5.1'
+
+        // logback
+        implementation 'org.slf4j:slf4j-api:1.7.25'
+//        implementation 'org.slf4j:slf4j-simple:1.7.25'
+
+        implementation 'ch.qos.logback:logback-core:1.2.3'
+        implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+        // annotations
+        implementation 'com.google.code.findbugs:jsr305:3.0.2' // jsr305
+        implementation 'javax.annotation:javax.annotation-api:1.3.2' //jsr250
+        //implementation ('org.glassfish:javax.annotation:10.0-b28')
+
+        // utility libraries
+        implementation 'com.google.guava:guava:23.0'
+        implementation 'commons-codec:commons-codec:1.11'
+        implementation 'commons-validator:commons-validator:1.6'
+        implementation 'commons-cli:commons-cli:1.4'
+        implementation 'org.apache.commons:commons-lang3:3.7'
+
+        // grpc
+        implementation 'com.google.protobuf:protobuf-java:3.6.0'
+        implementation 'io.grpc:grpc-netty:1.13.2'
+        implementation 'io.grpc:grpc-protobuf:1.13.2'
+        implementation 'io.grpc:grpc-stub:1.13.2'
+
+        //openSSL
+        implementation 'io.netty:netty-tcnative-boringssl-static:2.0.7.Final'
+
+		// mail
+	    implementation 'javax.activation:activation:1.1.1'
+	    implementation 'javax.mail:mail:1.4.7'
+        implementation 'org.codehaus.janino:janino:3.0.8'
+
+        // mysql jdbc connector
+	    implementation 'mysql:mysql-connector-java:8.0.11'
+
+        // JDBC connection pool
+        implementation 'com.zaxxer:HikariCP:3.2.0'
+
+	    // crypto
+	    implementation 'com.github.joshjdevl.libsodiumjni:libsodium-jni:1.0.8'
+	    implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
+
+	    // json
+	    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.4'
+	    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+
+	    // http client
+	    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+		//json
+		implementation group: 'org.json', name: 'json', version: '20090211'
+	}
+}
+
+// -------------------------------
+// project-specific configurations
+// -------------------------------
+
+project(':chain') {
+    // no project-specific configurations
+}
+
+project(':datastore') {
+    dependencies {
+        implementation project(':chain')
+    }
+}
+
+project(':nexus') {
+    apply plugin: 'application'
+	version = '0.0.1'
+	mainClassName = "org.aion.bridge.nexus.Main"
+
+    dependencies {
+        implementation project(':chain')
+        implementation project(':datastore')
+    }
+}
+
+project(':signatory') {
+    apply plugin: 'application'
+	version = '0.0.1'
+	mainClassName = "org.aion.bridge.signatory.Main"
+
+    dependencies {
+        implementation project(':chain')
+    }
+}
+
+project(':standby') {
+    apply plugin: 'application'
+    version = '0.0.1'
+    mainClassName = "org.aion.bridge.standby.Main"
+
+    dependencies {
+        implementation project(':chain')
+        implementation project(':datastore')
+    }
+}
+
+project(':tooling/transfer-metrics') {
+    apply plugin: 'application'
+    mainClassName = "org.aion.bridge.transferMetrics.Main"
+    dependencies {
+        implementation "org.apache.commons:commons-csv:1.5"
+        implementation project(':chain')
+        implementation project(':datastore')
+    }
+}
+
+project(':tooling/balance-monitor') {
+    apply plugin: 'application'
+    mainClassName = "org.aion.monitor.balance.Main"
+    dependencies {
+        implementation project(':chain')
+        implementation project(':datastore')
+    }
+}
+
+project(':tooling/eth-node-monitor') {
+    apply plugin: 'application'
+    mainClassName = "org.aion.monitor.Main"
+    dependencies {
+        implementation project(':chain')
+        implementation project(':datastore')
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

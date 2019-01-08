@@ -1,0 +1,58 @@
+plugins {
+    id "java"
+    id "idea"
+    id "org.jetbrains.gradle.plugin.idea-ext" version "0.3"
+    /**
+     * we omit dependency version numbers. instead dependency versions are used from the maven bom:
+     * https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies.
+     *
+     * Equivalent to: dependencyManagement { imports { mavenBom('org.springframework.boot:spring-boot-starter-parent:2.0.4.RELEASE') } }
+     */
+    id "org.springframework.boot" version "2.0.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+wrapper {
+    gradleVersion = '4.9'
+}
+
+group = 'org.aion.bridge.api'
+archivesBaseName = 'bridge-api'
+version = '1.0.4'
+sourceCompatibility = 10
+targetCompatibility = 10
+
+repositories {
+    // jcenter is a superset of mavenCentral
+    jcenter()
+}
+
+dependencies {
+    /* spring boot starters are convenient 'dependency groups' */
+
+    // includes spring web mvc
+    implementation ('org.springframework.boot:spring-boot-starter-web')
+
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    // utilities
+    implementation 'org.apache.commons:commons-lang3'
+
+    // cache
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
+
+    // includes testing dependencies like j-unit
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+// bootJar command to generate a deployable jar with run scripts
+bootJar {
+    classifier = 'boot'
+    mainClassName = 'org.aion.bridge.api.Main'
+    excludeDevtools = false
+    launchScript()
+}
+
